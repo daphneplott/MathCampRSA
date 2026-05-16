@@ -59,3 +59,30 @@ def generate_key_pairs(n_bits) -> tuple[int, int, int]:
     if y < 1:
         y += phi
     return N, e, y
+
+def main(n_bits: int, filename_stem: str):
+    start = time()
+    N, e, d = generate_key_pairs(n_bits)
+    print(f'{time() - start} seconds elapsed')
+
+    public_file = filename_stem + '.public.txt'
+    with open(public_file, 'w') as file:
+        file.writelines([
+            str(N),
+            '\n',
+            str(e)
+        ])
+    print(public_file, 'written')
+
+    private_file = filename_stem + '.private.txt'
+    with open(private_file, 'w') as file:
+        file.writelines([
+            str(N),
+            '\n',
+            str(d)
+        ])
+    print(private_file, 'written')
+
+
+if __name__ == '__main__':
+    main(int(sys.argv[1]), sys.argv[2])
